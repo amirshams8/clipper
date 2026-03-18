@@ -1,0 +1,47 @@
+//===== FILE: gradle.properties =====
+org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+android.useAndroidX=true
+android.enableJetifier=true
+kotlin.code.style=official
+
+//===== FILE: app/build.gradle.kts =====
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+}
+
+android {
+    namespace = "ca.zgrs.clipper"
+    compileSdk = 36
+
+    defaultConfig {
+        applicationId = "ca.zgrs.clipper"
+        minSdk = 21
+        targetSdk = 36
+        versionCode = 2
+        versionName = "1.3-jarvis"
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+
+dependencies {
+    // No external dependencies — keeps APK minimal and avoids AndroidX conflicts
+}
