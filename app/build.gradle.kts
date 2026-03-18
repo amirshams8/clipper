@@ -36,5 +36,5 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.13.0")
+    // No external dependencies — keeps APK minimal and avoids AndroidX conflicts
 }
