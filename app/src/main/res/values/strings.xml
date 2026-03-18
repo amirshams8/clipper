@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Clipper</string>
+    <string name="started">Clipper service is started.</string>
+    <string name="usage">Commands:\n
+        am broadcast -a clipper.set -e text \'text\'\n
+        am broadcast -a clipper.get\n
+        am broadcast -a clipper.set.b64 --es text \'base64\'</string>
+</resources>
