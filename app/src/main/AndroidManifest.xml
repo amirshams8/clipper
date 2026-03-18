@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Required for foreground service on Android 9+ -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- Required for foreground service type on Android 14+ -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <application
