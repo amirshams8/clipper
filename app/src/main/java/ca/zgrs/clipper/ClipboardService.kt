@@ -7,6 +7,7 @@ import android.app.Service
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.IBinder
 import android.util.Base64
@@ -33,11 +34,26 @@ class ClipboardService : Service() {
         private const val NOTIFICATION_ID = 1
     }
 
+    // Manifest receivers do not get implicit broadcasts (targetSdk 26+), so
+    // `am broadcast -a clipper.get` with no -n was silently dropped (result=0).
+    // Registering the same receiver here restores plain `-a` broadcasts.
+    private val receiver = ClipperReceiver()
+
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
         startForeground(NOTIFICATION_ID, buildNotification())
+        val filter = IntentFilter().apply {
+            addAction("clipper.get"); addAction("clipper.set")
+            addAction("clipper.set.b64"); addAction("get"); addAction("set")
+        }
+        registerReceiver(receiver, filter, RECEIVER_EXPORTED)
         Log.d(TAG, "ClipboardService running in foreground")
+    }
+
+    override fun onDestroy() {
+        try { unregisterReceiver(receiver) } catch (_: IllegalArgumentException) {}
+        super.onDestroy()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

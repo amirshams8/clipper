@@ -63,6 +63,9 @@ class ClipperReceiver : BroadcastReceiver() {
             }
 
             "clipper.get", "get" -> {
+                // Android 10+: only the FOCUSED app can read the clipboard. From the
+                // background primaryClip is null -> RESULT_CANCELED / "". Callers must
+                // bring Clipper to the foreground first (see workflows/clipper.sh).
                 val cb = context.getSystemService(Context.CLIPBOARD_SERVICE)
                         as ClipboardManager
                 val clip = cb.primaryClip?.getItemAt(0)?.text?.toString()
